@@ -53,7 +53,7 @@ int main(int argc, char*argv[])
     if (filename == "-h" || argc < 2)
     {
         // if the option is "-h" or there is no options at all, show the help text
-        cout << "Xgcc Version 0.0.0\n";
+        cout << "Xgcc Version 1.0.0\n";
         cout << "Usage: xgcc file-name [-options]\n";
         cout << "-c only compile\n";
         cout << "-r only run\n";
