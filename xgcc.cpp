@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// Xgcc Version 0.0.0
+// Xgcc Version 1.0.0
 // Author: @askformeal github.com
 // Oh please! It's hard to register a user name on github 
 
