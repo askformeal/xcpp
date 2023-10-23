@@ -7,7 +7,7 @@ int main()
     // a example program for test
     string input;
     
-    cout << "Enter somthing: \n";
+    cout << "Enter something: \n";
     cin >> input;
     cout << "You just entered: " << input;
 }
