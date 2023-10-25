@@ -17,6 +17,8 @@ Run cpp file with a single command
 
 Program running timing
 
+Automatically delete the .exe file after run it
+
 No complex installation needed
 
 ----
@@ -41,8 +43,12 @@ You don't have to add the .cpp suffix, just make sure the file is in current fol
 
 Options:
 
--c only compile, don't run
+-c Only compile
 
--r only run, don't compile
+-r Only run
 
--h show help
+-h Show help
+
+-o2 Use o2 optimization when compile
+
+-d Delete the .exe file after run it
