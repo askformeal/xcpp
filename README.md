@@ -8,7 +8,7 @@ This software only works on Windows System. I might create a Linux Version later
 
 You'll have to install gcc compiler to use this software, open CMD and enter "g++ --version" to check if you already have it.
 
-If you want to compile the source code of v1.0.0 or v1.1.0 yourself, make you sure you can use the "bits/stdc++.h" header file.
+If you want to compile the source code of v1.0.0 or v1.1.0  yourself, make you sure you can use the "bits/stdc++.h" header file.
 
 ----
 Features:
