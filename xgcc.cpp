@@ -1,5 +1,7 @@
-#include<bits/stdc++.h>
-    
+#include<iostream>
+#include<fstream>
+#include<ctime>
+
 using namespace std;
 
 // Xgcc Version 1.1.0
