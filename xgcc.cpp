@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+    #include<bits/stdc++.h>
 
 using namespace std;
 
@@ -143,7 +143,7 @@ int main(int argc, char*argv[])
         if (o2)
         {
             // add -o2 to the compile command
-            cmd_command += "-o2 ";
+            cmd_command += "-O2 ";
         }
         cmd_command += "-o ";
         cmd_command += filename.substr(0,filename.length()-4);
