@@ -1,5 +1,5 @@
-    #include<bits/stdc++.h>
-
+#include<bits/stdc++.h>
+    
 using namespace std;
 
 // Xgcc Version 1.1.0
