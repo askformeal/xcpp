@@ -200,6 +200,16 @@ int main(int argc, char*argv[])
             cmd_command += ".exe";
             // generate CMD command to delete the .exe file
             system(cmd_command.c_str());
+            ifstream exist_test(filename_cutted+".exe");
+            if (!(exist_test.good()))
+            {
+                cout << "*Successfully deleted " << filename_cutted << ".exe*\n" << '\n';
+            }
+            else
+            {
+                cout << "*Error:*\n\tCannot delete " << filename_cutted << ".exe*\n";
+                return 0;
+            }
         }
     }
     return 0;

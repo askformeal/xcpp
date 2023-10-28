@@ -1,5 +1,5 @@
 # xgcc
-xgcc is a tool to run C++ programs more quickly.
+Xgcc is a tool to run C++ programs more quickly.
 ![Logo](https://github.com/askformeal/xgcc/assets/109349321/d6db2458-8334-41cd-9ed8-10e3675ee7d8)
 
 ## Requirements:
