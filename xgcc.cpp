@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// Xgcc Version 1.1.0
+// Xgcc Version 1.2.0
 // Author: @askformeal github.com
 // Oh please! It's hard to register a user name on github 
 
@@ -18,7 +18,7 @@ void show_help()
 {
     // show help text
     // if the option is "-h" or there is no options at all, show the help text
-    cout << "Xgcc Version 1.1.0\n";
+    cout << "Xgcc Version 1.2.0\n";
     cout << "Usage: xgcc file-name [-options]\n";
     cout << "-c Only compile\n";
     cout << "-r Only run\n";
