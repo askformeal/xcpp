@@ -1,4 +1,5 @@
 # xgcc
+
 Xgcc is a tool to run C++ programs more quickly.
 ![Logo](https://github.com/askformeal/xgcc/assets/109349321/d6db2458-8334-41cd-9ed8-10e3675ee7d8)
 
@@ -10,7 +11,8 @@ You'll have to install gcc compiler to use this software, open CMD and enter "g+
 
 If you want to compile the source code of v1.0.0 or v1.1.0 yourself, make you sure you can use the "bits/stdc++.h" header file.
 
-----
+---
+
 ## Features:
 
 Run cpp file with a single command
@@ -21,14 +23,16 @@ Automatically delete the .exe file after run it
 
 No complex installation needed
 
-----
+---
+
 ## How to install:
 
 If you downloaded the .exe file, copy it into C:\Windows\System32.
 
 If you downloaded the .cpp file, you'll have to compile it yourself and make sure the generated .exe file is named "xgcc.exe" and then copy it into C:\Windows\System32.
 
-----
+---
+
 ## How to use
 
 ### Usage:

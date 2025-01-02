@@ -28,9 +28,6 @@ bool retain = false;
 
 void print_help()
 {
-    cout << "xgcc version " << version << "\n";
-    cout << "    By Demons1014\n";
-    cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
     cout << "Usage:\n";
     cout << "    xgcc [file name] [strings]\n";
     cout << "    xgcc -h\n";
@@ -42,10 +39,19 @@ void print_help()
     cout << "    -R Do not delete executable file after executing\n";
     cout << "    -O1 Use O1 optimization\n";
     cout << "    -O2 Use O2 optimization\n";
-    cout << "    -O2 Use O2 optimization\n\n";
+    cout << "    -O2 Use O2 optimization\n";
+    cout << "    -V/-VERSION show version infomation\n";
+    cout << "    -H/-HELP show this help infomation\n";
+}
+
+void print_version()
+{
+    cout << "xgcc version " << version << "\n";
+    cout << "    By Demons1014\n";
+    cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
     cout << "If you want to report a problem or give a suggest, please connect me by:\n";
-    cout << "    connect @demons1014(uid: 787042) on luogu.com.cn,\n";
-    cout << "    send an E-mail to zeus1014_2023@163.com,\n";
+    cout << "    connect @demons1014 at https://www.luogu.com.cn/chat?uid=787042\n";
+    cout << "    send an E-mail to zeus1014_2023@163.com\n";
     cout << "    creat an issue at https://github.com/askformeal/xgcc/issues\n\n";
     cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
 }
@@ -96,6 +102,11 @@ int main(int argc, char *argv[])
         else if (ops[i] == "-h" || ops[i] == "-help")
         {
             print_help();
+            return 0;
+        }
+        else if (ops[i] == "-v" || ops[i] == "-version")
+        {
+            print_version();
             return 0;
         }
         else
