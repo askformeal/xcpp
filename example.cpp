@@ -2,12 +2,15 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
     // a example program for test
-    string input;
-    
-    cout << "Enter something: \n";
-    cin >> input;
-    cout << "You just entered: " << input;
+    //int a = 1 / 0;
+    cout << "This is an example program\nThere are " << argc << " args\n";
+    for (int i = 0; i < argc; i++)
+    {
+        cout << argv[i] << '\n';
+    }
+    system("pause");
+    return 0;
 }

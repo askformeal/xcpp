@@ -1,215 +1,212 @@
-#include<iostream>
-#include<fstream>
-#include<ctime>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <ctime>
+#include <chrono>
+#include <cctype>
+#include <filesystem>
+#include <algorithm>
 
 using namespace std;
 
-// Xgcc Version 1.2.0
-// Author: @askformeal github.com
-// Oh please! It's hard to register a user name on github 
+string version = "2.0.0";
 
+filesystem::path file_path;
+filesystem::path exe_path;
 
-// This program only work in Windows System
-// compile this file using "g++ -o xgcc xgcc.cpp" and push xgcc.exe into C:\Windows\System32 folder
+string compile_command;
+string run_command;
+string del_command;
 
+vector<string> ops;  // the options
+vector<string> args; // the arguments and file name
 
+bool o1 = false;
+bool o2 = false;
+bool o3 = false;
+bool retain = false;
 
-void show_help()
+void print_help()
 {
-    // show help text
-    // if the option is "-h" or there is no options at all, show the help text
-    cout << "Xgcc Version 1.2.0\n";
-    cout << "Usage: xgcc file-name [-options]\n";
-    cout << "-c Only compile\n";
-    cout << "-r Only run\n";
-    cout << "-h Show help\n";
-    cout << "-o2 Use o2 optimization when compile\n";
-    cout << "-d Delete the .exe file after run it\n";
-    cout << "Github: https://github.com/askformeal/xgcc";
-    exit(0);
+    cout << "xgcc version " << version << "\n";
+    cout << "    By Demons1014\n";
+    cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
+    cout << "Usage:\n";
+    cout << "    xgcc [file name] [strings]\n";
+    cout << "    xgcc -h\n";
+    cout << "    xgcc -help\n";
+    cout << "File name must go right after the xgcc command\n";
+    cout << "Strings starts with \"-\" will be takes as \"options\", while others will be takes as \"arguments\"\n";
+    cout << "Arguments will be passed into executable file\n";
+    cout << "Available options:\n";
+    cout << "    -R Do not delete executable file after executing\n";
+    cout << "    -O1 Use O1 optimization\n";
+    cout << "    -O2 Use O2 optimization\n";
+    cout << "    -O2 Use O2 optimization\n\n";
+    cout << "If you want to report a problem or give a suggest, please connect me by:\n";
+    cout << "    connect @demons1014(uid: 787042) on luogu.com.cn,\n";
+    cout << "    send an E-mail to zeus1014_2023@163.com,\n";
+    cout << "    creat an issue at https://github.com/askformeal/xgcc/issues\n\n";
+    cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
 }
 
-void check_file_exist(string filename)
-// check if a file exists in the current folder
+string get_lower(string s)
 {
-    ifstream exist_test(filename);
-
-    if (!(exist_test.good()))
+    for (int i = 0; i < s.size(); i++)
     {
-        cout << "*Error:*\n\tNo such file: " << filename << '\n';
-        exit(0);
+        s[i] = tolower(s[i]);
     }
+    return s;
 }
 
-int main(int argc, char*argv[])
+int main(int argc, char *argv[])
 {
-    //const int max_args = 5; // max CMD arguments allowed // remove argument number check for now
-
-    string option;  
-    
-    bool if_compile = true; // whether to compile the .cpp file
-    bool if_run = true; // whether to run the .exe file
-
-    bool o2; // wether to use o2 optimization
-
-    bool del_exe; // whether to delete the .exe file after run it
-
-    string cmd_command; // CMD command to run
-
-    string filename; // full file name, such as example.cpp
-    string filename_cutted; // file name without the .cpp suffix, such as example
-    
-    int return_code; // return code of the compilation command
-
-    clock_t start,end; // record the start and end time of the running of the .exe file
-    double elapsed_seconds; // time used to run the .exe file
-    if (argc >= 2)
+    for (int i = 1; i < argc; i++)
     {
-        //only set the file name when there a parament is given in the terminal
-        filename = argv[1];
-    }
-
-    if (filename == "-h" || argc < 2)
-    {
-        show_help();
-    }   
-    
-    /*if (argc > max_args)
-    {
-        // show an error massage is there's more than 3 arguments
-        cout << "*Error:*\n\tToo many arguments\n";
-        return 0;
-    }*/
-
-    else 
-    {
-        for (int i = 2; i < argc; i++)
+        if (argv[i][0] == '-') // all options starts with -
         {
-            option = argv[i];
-            /*
-            options about how to run the .cpp file
-            -c only compile
-            -r only run
-            -h show help
-            -o2 use o2 optimization when compile
-            -d delete the .exe file after run it
-            */
-            if (option == "-c")
-            {
-                if_run = false;
-            }
-            else if (option == "-r")
-            {
-                if_compile = false;
-            }
-            else if (option == "-o2")
-            {
-                o2 = true;
-            }
-            else if (option == "-d")
-            {
-                del_exe = true;
-            }
-            else
-            {
-                // if the option isn't "-c" or "-r", show an error massage
-                cout << "*Error:*\n\tWrong option, enter \"xgcc -h for help\"\n";
-                return 0;
-            }
-        }
-    }
-        
-    if ( (!if_run) && (!if_compile))
-    {
-        // if the user entered both the "-c" and "-r" options, then run and compile
-        if_run = true;
-        if_compile = true;
-    }
-
-    if (filename.length() < 4 || filename.substr(filename.length()-4,4) != ".cpp")
-    {
-        //if the file name didn't include the .cpp suffix, add one to the end
-        filename = filename + ".cpp";
-    }
-
-    filename_cutted = filename.substr(0,filename.length()-4); // generate file name without suffix
-
-    if (if_compile)
-    {
-        
-        check_file_exist(filename); // check if the .cpp file exist in the current folder
-
-        cmd_command = ""; // there will be an odd BUG if I don't add this line, and I don't know why
-
-        cmd_command += "g++ "; // generate CMD command
-        if (o2)
-        {
-            // add -o2 to the compile command
-            cmd_command += "-O2 ";
-        }
-        cmd_command += "-o ";
-        cmd_command += filename.substr(0,filename.length()-4);
-        cmd_command += " ";
-        cmd_command += filename;
-        
-        return_code = system(cmd_command.c_str());
-        // Note: system function don't accept strings
-    
-        if (return_code != 0)
-        {
-            // show an error massage if the return code is not 0
-            cout << "\n*Error:*\n\tCompilation failed\n";
-            return 0;
-        }
-        else if (o2)
-        {
-            cout << "*O2 Compilation passed*\n";
+            ops.push_back(argv[i]);
         }
         else
         {
-            cout << "*Compilation passed*\n";
+            args.push_back(argv[i]);
         }
     }
 
-    if (if_run)
+    for (int i = 0; i < ops.size(); i++)
     {
-        check_file_exist(filename_cutted + ".exe"); // check if the .exe file exists in the current folder
-
-        cmd_command = "";
-        cmd_command += ".\\";
-        cmd_command += filename_cutted;
-        cmd_command += ".exe";
-        // generate CMD command to run the .exe file
-        
-        cout << "*Running started*\n--------------------\n\n";   
-
-        start = clock(); // set start time
-        system(cmd_command.c_str());
-        end = clock(); // set end time
-
-        elapsed_seconds = double(end-start) / CLOCKS_PER_SEC; //calculate the elapsed seconds
-        
-        cout << "\n--------------------\n*Running completed*\nTime used: " << elapsed_seconds << " seconds.\n";
-        
-        if (del_exe)
+        ops[i] = get_lower(ops[i]);
+        if (ops[i] == "-o1")
         {
-            
-            cmd_command = "";
-            cmd_command += "del .\\";
-            cmd_command += filename_cutted;
-            cmd_command += ".exe";
-            // generate CMD command to delete the .exe file
-            system(cmd_command.c_str());
-            ifstream exist_test(filename_cutted+".exe");
-            if (!(exist_test.good()))
-            {
-                cout << "*Successfully deleted " << filename_cutted << ".exe*\n" << '\n';
-            }
-            else
-            {
-                cout << "*Error:*\n\tCannot delete " << filename_cutted << ".exe*\n";
-                return 0;
-            }
+            o1 = true;
+        }
+        else if (ops[i] == "-o2")
+        {
+            o2 = true;
+        }
+        else if (ops[i] == "-o3")
+        {
+            o3 = true;
+        }
+        else if (ops[i] == "-r")
+        {
+            cout << "retain file\n";
+            retain = true;
+        }
+        else if (ops[i] == "-h" || ops[i] == "-help")
+        {
+            print_help();
+            return 0;
+        }
+        else
+        {
+            cout << "Invalid option: \"" << ops[i] << "\"\n";
+            return -1;
+        }
+    }
+
+    if (args.size() == 0)
+    {
+        cout << "No input file\n";
+        return -1;
+    }
+
+    string tmp = argv[1];
+    tmp = get_lower(tmp);
+    size_t pos = tmp.find(".cpp");
+    
+    if (pos != tmp.size() - 4) // check if the file name has a .cpp suffix
+    {
+        tmp = tmp + ".cpp";
+    }
+    file_path = tmp;
+
+    if (!filesystem::exists(file_path))
+    {
+        cout << "File \"" << file_path.string() << "\" dose not exist\n";
+        return -1;
+    }
+
+    tmp = tmp.replace(tmp.size() - 4, tmp.size(), ".exe");
+    exe_path = tmp;
+
+    string tmp1, tmp2;
+    tmp1 = file_path.string();
+    tmp2 = exe_path.string();
+
+    compile_command = "g++ -o " + tmp2 + " " + tmp1;
+    if (o3)
+    {
+        compile_command += "-O3";
+    }
+    else if (o2)
+    {
+        compile_command += " -O2";
+    }
+    else if (o1)
+    {
+        compile_command += "-O1";
+    }
+
+    run_command = tmp2;
+    for (int i = 1; i < args.size(); i++)
+    {
+        run_command += (" " + args[i]);
+    }
+        
+    del_command = "del " + tmp2;
+
+
+    /*cout << "compile command: " << compile_command << '\n';
+    cout << "run command: " << run_command << '\n';
+    cout << "del command: " << del_command << '\n';*/
+
+    int code1, code2, code3;
+    cout << "Compiling......\n";
+
+    auto start = chrono::high_resolution_clock::now();
+
+    code1 = system(compile_command.c_str());
+    
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = end - start;
+
+    if (code1 == 0)
+    {
+        cout << "Compilation completed in " << duration.count() << " seconds\n";
+    }
+    else
+    {
+        cout << "Compilation failed\n\n";
+        return -1;
+    }
+    
+    string exe_name = exe_path.filename().string();
+    cout << "Executing \"" << exe_name <<"\"......\n----------------\n";
+    
+    start = chrono::high_resolution_clock::now();
+
+    code2 = system(run_command.c_str());
+
+    end = chrono::high_resolution_clock::now();
+    duration = end - start;
+
+    if (code2 == 0)
+    {
+        cout << "----------------\nSuccessfully finished in " << duration.count() << " seconds\n";
+    }
+    else
+    {
+        cout << "----------------\nRuntime error, return value: " << code2 << '\n';
+        return -1;
+    }
+    if (!retain)
+    {
+        code3 = system(del_command.c_str());
+        if (code3 != 0)
+        {
+            cout << "Failed to delete executable file";
+            return -1;
         }
     }
     return 0;
