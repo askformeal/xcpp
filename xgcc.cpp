@@ -1,15 +1,11 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
-#include <ctime>
 #include <chrono>
-#include <cctype>
 #include <filesystem>
-#include <algorithm>
 
 using namespace std;
 
-string version = "2.0.0";
+string version = "2.0.0 alpha";
 
 filesystem::path file_path;
 filesystem::path exe_path;
@@ -44,33 +40,44 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    for (int i = 2; i < argc; i++)
+    if (argc == 1) //no argument passed to main, show help info
+    {
+        print_help();
+        return 0;
+    }
+
+    for (int i = 1; i < argc; i++)
     {
         if (argv[i][0] == '-') // all options starts with -
         {
             ops.push_back(argv[i]);
         }
-        else
+        else if (i != 1) // file name will not be take as arguments
         {
             args.push_back(argv[i]);
         }
+        cout << argv[i] << '\n';
     }
 
     for (int i = 0; i < ops.size(); i++)
     {
-        if (handle_op(i) != 0)
+        int code = handle_op(i);
+        if (code == -1)
         {
             return -1;
         }
-    }
-
-    if (args.size() == 0)
-    {
-        cout << "No input file\n";
-        return -1;
+        else if (code == 1)
+        {
+            return 0;
+        }
     }
 
     string tmp = argv[1];
+    if (tmp[0] == '-') // if the first string after xgcc is an option, then there's no file name
+    {
+        cout << "No input file given\n";
+        return -1;
+    }
     tmp = get_lower(tmp);
     size_t pos = tmp.find(".cpp");
     
@@ -186,7 +193,6 @@ void print_help()
     cout << "    xgcc [file name] [strings]\n";
     cout << "    xgcc -h\n";
     cout << "    xgcc -help\n";
-    cout << "xgcc -help\n";
     cout << "Strings starts with \"-\" will be takes as \"options\", while others will be takes as \"arguments\"\n";
     cout << "Arguments will be passed into executable file\n";
     cout << "Available options:\n";
@@ -225,6 +231,12 @@ bool check_gpp()
 }
 
 int handle_op(int i)
+/*
+return values:
+0 = No error, continue
+1 = No error, terminate
+-1 = Error, terminate
+*/
 {
     ops[i] = get_lower(ops[i]);
     if (ops[i] == "-o1")
@@ -251,12 +263,12 @@ int handle_op(int i)
     else if (ops[i] == "-h" || ops[i] == "-help")
     {
         print_help();
-        return 0;
+        return 1;
     }
     else if (ops[i] == "-v" || ops[i] == "-version")
     {
         print_version();
-        return 0;
+        return 1;
     }
     else
     {
