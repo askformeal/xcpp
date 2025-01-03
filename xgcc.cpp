@@ -26,48 +26,25 @@ bool o2 = false;
 bool o3 = false;
 bool retain = false;
 
-void print_help()
-{
-    cout << "Usage:\n";
-    cout << "    xgcc [file name] [strings]\n";
-    cout << "    xgcc -h\n";
-    cout << "    xgcc -help\n";
-    cout << "File name must go right after the xgcc command\n";
-    cout << "Strings starts with \"-\" will be takes as \"options\", while others will be takes as \"arguments\"\n";
-    cout << "Arguments will be passed into executable file\n";
-    cout << "Available options:\n";
-    cout << "    -R Do not delete executable file after executing\n";
-    cout << "    -O1 Use O1 optimization\n";
-    cout << "    -O2 Use O2 optimization\n";
-    cout << "    -O2 Use O2 optimization\n";
-    cout << "    -V/-VERSION show version infomation\n";
-    cout << "    -H/-HELP show this help infomation\n";
-}
+void print_help();
 
-void print_version()
-{
-    cout << "xgcc version " << version << "\n";
-    cout << "    By Demons1014\n";
-    cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
-    cout << "If you want to report a problem or give a suggest, please connect me by:\n";
-    cout << "    connect @demons1014 at https://www.luogu.com.cn/chat?uid=787042\n";
-    cout << "    send an E-mail to zeus1014_2023@163.com\n";
-    cout << "    creat an issue at https://github.com/askformeal/xgcc/issues\n\n";
-    cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
-}
+void print_version();
 
-string get_lower(string s)
-{
-    for (int i = 0; i < s.size(); i++)
-    {
-        s[i] = tolower(s[i]);
-    }
-    return s;
-}
+bool check_gpp();
+
+string get_lower(string s);
+
+int handle_op(int i);
 
 int main(int argc, char *argv[])
 {
-    for (int i = 1; i < argc; i++)
+
+    if (!check_gpp())
+    {
+        return -1;
+    }
+
+    for (int i = 2; i < argc; i++)
     {
         if (argv[i][0] == '-') // all options starts with -
         {
@@ -81,37 +58,8 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < ops.size(); i++)
     {
-        ops[i] = get_lower(ops[i]);
-        if (ops[i] == "-o1")
+        if (handle_op(i) != 0)
         {
-            o1 = true;
-        }
-        else if (ops[i] == "-o2")
-        {
-            o2 = true;
-        }
-        else if (ops[i] == "-o3")
-        {
-            o3 = true;
-        }
-        else if (ops[i] == "-r")
-        {
-            cout << "retain file\n";
-            retain = true;
-        }
-        else if (ops[i] == "-h" || ops[i] == "-help")
-        {
-            print_help();
-            return 0;
-        }
-        else if (ops[i] == "-v" || ops[i] == "-version")
-        {
-            print_version();
-            return 0;
-        }
-        else
-        {
-            cout << "Invalid option: \"" << ops[i] << "\"\n";
             return -1;
         }
     }
@@ -138,7 +86,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    tmp = tmp.replace(tmp.size() - 4, tmp.size(), ".exe");
+    tmp = tmp.replace(tmp.size() - 4, tmp.size(), ".exe"); // replace the suffix
     exe_path = tmp;
 
     string tmp1, tmp2;
@@ -221,4 +169,98 @@ int main(int argc, char *argv[])
         }
     }
     return 0;
+}
+
+string get_lower(string s)
+{
+    for (int i = 0; i < s.size(); i++)
+    {
+        s[i] = tolower(s[i]);
+    }
+    return s;
+}
+
+void print_help()
+{
+    cout << "Usage:\n";
+    cout << "    xgcc [file name] [strings]\n";
+    cout << "    xgcc -h\n";
+    cout << "    xgcc -help\n";
+    cout << "xgcc -help\n";
+    cout << "Strings starts with \"-\" will be takes as \"options\", while others will be takes as \"arguments\"\n";
+    cout << "Arguments will be passed into executable file\n";
+    cout << "Available options:\n";
+    cout << "    -R Do not delete executable file after executing\n";
+    cout << "    -O1 Use O1 optimization\n";
+    cout << "    -O2 Use O2 optimization\n";
+    cout << "    -O2 Use O2 optimization\n";
+    cout << "    -V/-VERSION show version infomation\n";
+    cout << "    -H/-HELP show this help infomation\n";
+}
+
+void print_version()
+{
+    cout << "xgcc version " << version << "\n";
+    cout << "    By Demons1014\n";
+    cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
+    cout << "If you want to report a problem or give a suggest, please connect me by:\n";
+    cout << "    connect @demons1014 at https://www.luogu.com.cn/chat?uid=787042\n";
+    cout << "    send an E-mail to zeus1014_2023@163.com\n";
+    cout << "    creat an issue at https://github.com/askformeal/xgcc/issues\n\n";
+    cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
+}
+
+bool check_gpp()
+{
+    int code = system("g++ --version > null");
+    if (code != 0)
+    {
+        cout << "No g++ compiler installed\n";
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+int handle_op(int i)
+{
+    ops[i] = get_lower(ops[i]);
+    if (ops[i] == "-o1")
+    {
+        o1 = true;
+        return 0;
+    }
+    else if (ops[i] == "-o2")
+    {
+        o2 = true;
+        return 0;
+    }
+    else if (ops[i] == "-o3")
+    {
+        o3 = true;
+        return 0;
+    }
+    else if (ops[i] == "-r")
+    {
+        cout << "retain file\n";
+        retain = true;
+        return 0;
+    }
+    else if (ops[i] == "-h" || ops[i] == "-help")
+    {
+        print_help();
+        return 0;
+    }
+    else if (ops[i] == "-v" || ops[i] == "-version")
+    {
+        print_version();
+        return 0;
+    }
+    else
+    {
+        cout << "Invalid option: \"" << ops[i] << "\"\n";
+        return -1;
+    }
 }
