@@ -1,11 +1,12 @@
-#include <iostream>
+ #include <iostream>
 #include <vector>
 #include <chrono>
 #include <filesystem>
+#include <fstream>
 
 using namespace std;
 
-string version = "2.0.0 alpha";
+string version = "2.0.0-rc1";
 
 filesystem::path file_path;
 filesystem::path exe_path;
@@ -16,6 +17,8 @@ string del_command;
 
 vector<string> ops;  // the options
 vector<string> args; // the arguments and file name
+
+vector<string> config;
 
 bool o1 = false;
 bool o2 = false;
@@ -34,7 +37,6 @@ int handle_op(int i);
 
 int main(int argc, char *argv[])
 {
-
     if (!check_gpp())
     {
         return -1;
@@ -56,7 +58,6 @@ int main(int argc, char *argv[])
         {
             args.push_back(argv[i]);
         }
-        cout << argv[i] << '\n';
     }
 
     for (int i = 0; i < ops.size(); i++)
@@ -89,11 +90,11 @@ int main(int argc, char *argv[])
 
     if (!filesystem::exists(file_path))
     {
-        cout << "File \"" << file_path.string() << "\" dose not exist\n";
+        cout << "File \"" << file_path.string() << "\" does not exist\n";
         return -1;
     }
 
-    tmp = tmp.replace(tmp.size() - 4, tmp.size(), ".exe"); // replace the suffix
+    tmp = tmp.replace(tmp.size() - 4, 4, ".exe"); // replace the suffix
     exe_path = tmp;
 
     string tmp1, tmp2;
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
     compile_command = "g++ -o " + tmp2 + " " + tmp1;
     if (o3)
     {
-        compile_command += "-O3";
+        compile_command += " -O3";
     }
     else if (o2)
     {
@@ -111,11 +112,11 @@ int main(int argc, char *argv[])
     }
     else if (o1)
     {
-        compile_command += "-O1";
+        compile_command += " -O1";
     }
 
     run_command = tmp2;
-    for (int i = 1; i < args.size(); i++)
+    for (int i = 0; i < args.size(); i++)
     {
         run_command += (" " + args[i]);
     }
@@ -148,7 +149,7 @@ int main(int argc, char *argv[])
     }
     
     string exe_name = exe_path.filename().string();
-    cout << "Executing \"" << exe_name <<"\"......\n----------------\n";
+    cout << "Executing \"" << exe_name <<"\"...\n----------------\n";
     
     start = chrono::high_resolution_clock::now();
 
@@ -189,19 +190,18 @@ string get_lower(string s)
 
 void print_help()
 {
-    cout << "Usage:\n";
-    cout << "    xgcc [file name] [strings]\n";
+    cout << "Usage\n";
+    cout << "    xgcc [file name] [argument 1， argument 2 ...]\n";
     cout << "    xgcc -h\n";
     cout << "    xgcc -help\n";
-    cout << "Strings starts with \"-\" will be takes as \"options\", while others will be takes as \"arguments\"\n";
-    cout << "Arguments will be passed into executable file\n";
+    cout << "arguments starts with "-" will be taken as \"options\", while others will be passed into the executable file";
     cout << "Available options:\n";
     cout << "    -R Do not delete executable file after executing\n";
     cout << "    -O1 Use O1 optimization\n";
     cout << "    -O2 Use O2 optimization\n";
-    cout << "    -O2 Use O2 optimization\n";
-    cout << "    -V/-VERSION show version infomation\n";
-    cout << "    -H/-HELP show this help infomation\n";
+    cout << "    -O3 Use O3 optimization\n";
+    cout << "    -V/-VERSION show version information\n";
+    cout << "    -H/-HELP show this help information\n";
 }
 
 void print_version()
@@ -209,16 +209,16 @@ void print_version()
     cout << "xgcc version " << version << "\n";
     cout << "    By Demons1014\n";
     cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
-    cout << "If you want to report a problem or give a suggest, please connect me by:\n";
+    cout << "If you want to report a problem or give a suggestion, please connect me by:\n";
     cout << "    connect @demons1014 at https://www.luogu.com.cn/chat?uid=787042\n";
     cout << "    send an E-mail to zeus1014_2023@163.com\n";
-    cout << "    creat an issue at https://github.com/askformeal/xgcc/issues\n\n";
+    cout << "    create an issue at https://github.com/askformeal/xgcc/issues\n\n";
     cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
 }
 
 bool check_gpp()
 {
-    int code = system("g++ --version > null");
+    int code = system("g++ --version > nul");
     if (code != 0)
     {
         cout << "No g++ compiler installed\n";
@@ -256,7 +256,7 @@ return values:
     }
     else if (ops[i] == "-r")
     {
-        cout << "retain file\n";
+        cout << "Executable file will be retained\n";
         retain = true;
         return 0;
     }
