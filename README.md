@@ -53,6 +53,7 @@ arguments starts with "-" will be taken as "options", while others will be passe
 * -O1 Use O1 optimization
 * -O2 Use O2 optimization
 * -O3 Use O3 optimization
+* -C Compile only
 * -V/-VERSION show version information
 * -H/-HELP show this help information
 

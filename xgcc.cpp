@@ -1,4 +1,4 @@
- #include <iostream>
+#include <iostream>
 #include <vector>
 #include <chrono>
 #include <filesystem>
@@ -6,7 +6,7 @@
 
 using namespace std;
 
-string version = "2.0.0-rc1";
+string version = "2.0.0";
 
 filesystem::path file_path;
 filesystem::path exe_path;
@@ -24,6 +24,7 @@ bool o1 = false;
 bool o2 = false;
 bool o3 = false;
 bool retain = false;
+bool run = true;
 
 void print_help();
 
@@ -147,33 +148,35 @@ int main(int argc, char *argv[])
         cout << "Compilation failed\n\n";
         return -1;
     }
-    
-    string exe_name = exe_path.filename().string();
-    cout << "Executing \"" << exe_name <<"\"...\n----------------\n";
-    
-    start = chrono::high_resolution_clock::now();
-
-    code2 = system(run_command.c_str());
-
-    end = chrono::high_resolution_clock::now();
-    duration = end - start;
-
-    if (code2 == 0)
+    if (run)
     {
-        cout << "----------------\nSuccessfully finished in " << duration.count() << " seconds\n";
-    }
-    else
-    {
-        cout << "----------------\nRuntime error, return value: " << code2 << '\n';
-        return -1;
-    }
-    if (!retain)
-    {
-        code3 = system(del_command.c_str());
-        if (code3 != 0)
+        string exe_name = exe_path.filename().string();
+        cout << "Executing \"" << exe_name <<"\"...\n----------------\n";
+
+        start = chrono::high_resolution_clock::now();
+
+        code2 = system(run_command.c_str());
+
+        end = chrono::high_resolution_clock::now();
+        duration = end - start;
+
+        if (code2 == 0)
         {
-            cout << "Failed to delete executable file";
+            cout << "----------------\nSuccessfully finished in " << duration.count() << " seconds\n";
+        }
+        else
+        {
+            cout << "----------------\nRuntime error, return value: " << code2 << '\n';
             return -1;
+        }
+        if (!retain)
+        {
+            code3 = system(del_command.c_str());
+            if (code3 != 0)
+            {
+                cout << "Failed to delete executable file";
+                return -1;
+            }
         }
     }
     return 0;
@@ -200,6 +203,7 @@ void print_help()
     cout << "    -O1 Use O1 optimization\n";
     cout << "    -O2 Use O2 optimization\n";
     cout << "    -O3 Use O3 optimization\n";
+    cout << "    -C  Compile only\n";
     cout << "    -V/-VERSION show version information\n";
     cout << "    -H/-HELP show this help information\n";
 }
@@ -258,6 +262,11 @@ return values:
     {
         cout << "Executable file will be retained\n";
         retain = true;
+        return 0;
+    }
+    else if (ops[i] == "-c")
+    {
+        run = false;
         return 0;
     }
     else if (ops[i] == "-h" || ops[i] == "-help")
