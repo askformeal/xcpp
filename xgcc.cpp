@@ -15,8 +15,8 @@ string compile_command;
 string run_command;
 string del_command;
 
-vector<string> ops;  // the options
-vector<string> args; // the arguments and file name
+vector<string> ops;
+vector<string> args;
 
 vector<string> config;
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    if (argc == 1) //no argument passed to main, show help info
+    if (argc == 1)
     {
         print_help();
         return 0;
@@ -51,11 +51,11 @@ int main(int argc, char *argv[])
 
     for (int i = 1; i < argc; i++)
     {
-        if (argv[i][0] == '-') // all options starts with -
+        if (argv[i][0] == '-')
         {
             ops.push_back(argv[i]);
         }
-        else if (i != 1) // file name will not be take as arguments
+        else if (i != 1)
         {
             args.push_back(argv[i]);
         }
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     }
 
     string tmp = argv[1];
-    if (tmp[0] == '-') // if the first string after xgcc is an option, then there's no file name
+    if (tmp[0] == '-')
     {
         cout << "No input file given\n";
         return -1;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     tmp = get_lower(tmp);
     size_t pos = tmp.find(".cpp");
     
-    if (pos != tmp.size() - 4) // check if the file name has a .cpp suffix
+    if (pos != tmp.size() - 4)
     {
         tmp = tmp + ".cpp";
     }
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    tmp = tmp.replace(tmp.size() - 4, 4, ".exe"); // replace the suffix
+    tmp = tmp.replace(tmp.size() - 4, 4, ".exe");
     exe_path = tmp;
 
     string tmp1, tmp2;
