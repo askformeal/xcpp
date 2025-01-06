@@ -2,4 +2,3 @@
 *.exe 
 /.vscode/
 xgcc_old.cpp
-xgcc_cn.cpp

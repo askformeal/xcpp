@@ -2,7 +2,6 @@
 #include <vector>
 #include <chrono>
 #include <filesystem>
-#include <fstream>
 
 using namespace std;
 
@@ -17,8 +16,6 @@ string del_command;
 
 vector<string> ops;  // the options
 vector<string> args; // the arguments and file name
-
-vector<string> config;
 
 bool o1 = false;
 bool o2 = false;
@@ -194,7 +191,7 @@ string get_lower(string s)
 void print_help()
 {
     cout << "Usage\n";
-    cout << "    xgcc [file name] [argument 1， argument 2 ...]\n";
+    cout << "    xgcc [file name] [argument 1, argument 2...]\n";
     cout << "    xgcc -h\n";
     cout << "    xgcc -help\n";
     cout << "arguments starts with "-" will be taken as \"options\", while others will be passed into the executable file";
@@ -210,14 +207,14 @@ void print_help()
 
 void print_version()
 {
-    cout << "xgcc version " << version << "\n";
+    cout << "XGCC version " << version << "\n";
     cout << "    By Demons1014\n";
     cout << "Github repository: https://github.com/askformeal/xgcc\n\n";
     cout << "If you want to report a problem or give a suggestion, please connect me by:\n";
     cout << "    connect @demons1014 at https://www.luogu.com.cn/chat?uid=787042\n";
     cout << "    send an E-mail to zeus1014_2023@163.com\n";
     cout << "    create an issue at https://github.com/askformeal/xgcc/issues\n\n";
-    cout << "I'll be most grateful for your feedback, and thank you for using xgcc\n";
+    cout << "I'll be most grateful for your feedback, and thank you for using XGCC\n";
 }
 
 bool check_gpp()
