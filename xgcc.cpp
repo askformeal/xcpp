@@ -6,7 +6,7 @@
 
 using namespace std;
 
-string version = "2.0.0";
+string version = "2.0.1";
 
 filesystem::path file_path;
 filesystem::path exe_path;
