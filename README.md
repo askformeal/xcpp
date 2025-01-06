@@ -1,62 +1,59 @@
 # XGCC
 
-English | [简体中文](README_CN.md)
+简体中文 | [English](README_EN.md)
 
-xgcc is a tool to run C++ source code more efficiently.
+XGCC可以让您更加高效地运行C++源代码。
+
 ![Logo](https://github.com/askformeal/xgcc/assets/109349321/d6db2458-8334-41cd-9ed8-10e3675ee7d8)
 
-## Requirements
+## 要求
 
-This software only works on Windows systems. I might create a Linux Version later.
+该软件目前只支持Windows版本，我以后可能会开发Linux版。
 
-xgcc is NOT a compiler, you'll have to install GNU compiler yourself. Open CMD and enter `g++ --version` to check if you already have it.
+xgcc**不**包含编译器，您需要自行安装GNU编译器。打开CMD并输入 `g++ --version`以检查编译器是否安装。
 
-If you want to compile the source code of v1.0.0 or v1.1.0 yourself, make sure you can use the `bits/stdc++.h` header file.
+如果您想编译v1.0.0或1.1.0版的源代码，请确保 `bits/stdc++.h`头文件可用。
 
----
+如果您需要自行编译，请确保头文件 `windows.h`可用。
 
-## Features
+## 功能
 
-Run cpp file with a single command
+一个命令即可运行C++源代码
 
-Executing and compiling timing
+执行和编译计时
 
-Automatically delete the executable file after run it
+运行完成后自动删除可执行文件
 
-O1, O2 and O3 	optimization
+支持O1、O2和O3优化
 
-No complex installation needed
+没有复杂的安装过程
 
----
+## 安装说明
 
-## How to install
+如果您下载了.exe文件，复制到 `C:\Windows\System32`或其他环境变量路径即可。
 
-If you downloaded the .exe file, just copy it into `C:\Windows\System32` or another system variable folder.
+如果您下载了源代码，请自行编译为xgcc.exe并将其复制到 `C:\Windows\System32`或其他环境变量路径。
 
-If you downloaded the source code, you'll have to compile it yourself and make sure the generated .exe file is named "xgcc.exe" and then copy it into `C:\Windows\System32` or another system variable folder.
+## 使用说明
 
----
+### 格式
 
-## How to use
-
-### Usage
-
-xgcc [file name] [argument 1, argument 2 ...]
+xgcc [文件名] [参数1，参数2……]
 xgcc -h
 xgcc -help
 
-arguments starts with "-" will be taken as "options", while others will be passed into the executable file.
+“-”开头的参数会被视作选项，其余的会被传入可执行文件。
 
-### Options
+### 选项
 
-* -R Do not delete executable file after executing
-* -O1 Use O1 optimization
-* -O2 Use O2 optimization
-* -O3 Use O3 optimization
-* -C Compile only
-* -V/-VERSION show version information
-* -H/-HELP show this help information
+* -R 运行后保留可执行文件
+* -O1 使用O1优化
+* -O2 使用O2优化
+* -O3 使用O3优化
+* -C 仅编译
+* -V/-VERSION 显示版本信息
+* -H/-HELP 显示帮助信息
 
-## Feedback
+## 反馈
 
-You can [chat with me](https://www.luogu.com.cn/chat?uid=787042) on Luogu, send an E-mail to zeus1014_2023@163.com or create a new issue.
+您可以在洛谷上[私信我](https://www.luogu.com.cn/chat?uid=787042)，发邮件到zeus1014_2023@163.com或创建一个新的Issue。
