@@ -1,6 +1,6 @@
 # XGCC
 
-English | [简体中文](README_EN.md)
+English | [简体中文](README_CN.md)
 
 xgcc is a tool to run C++ source code more efficiently.
 ![Logo](https://github.com/askformeal/xgcc/assets/109349321/d6db2458-8334-41cd-9ed8-10e3675ee7d8)
