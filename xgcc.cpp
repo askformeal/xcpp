@@ -6,7 +6,7 @@
 
 using namespace std;
 
-string version = "2.0.1"; //中文版
+string version = "2.0.2"; //中文版
 
 filesystem::path file_path;
 filesystem::path exe_path;
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     tmp = get_lower(tmp);
     size_t pos = tmp.find(".cpp");
     
-    if (pos != tmp.size() - 4)
+    if (pos != tmp.size() - 4 || tmp.size() <= 4)
     {
         tmp = tmp + ".cpp";
     }
@@ -163,11 +163,11 @@ int main(int argc, char *argv[])
 
         if (code2 == 0)
         {
-            cout << "----------------\n执行成功，用时" << duration.count() << "秒\n";
+            cout << "\n----------------\n执行成功，用时" << duration.count() << "秒\n";
         }
         else
         {
-            cout << "----------------\n运行时错误，返回值：" << code2 << '\n';
+            cout << "\n----------------\n运行时错误，返回值：" << code2 << '\n';
             return -1;
         }
         if (!retain)
