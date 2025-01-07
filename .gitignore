@@ -2,4 +2,5 @@
 *.exe 
 /.vscode/
 xgcc_old.cpp
-xgcc_cn.cpp
+How to install.txt
+安装说明.txt
