@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string version = "2.0.1";
+string version = "2.0.2";
 
 filesystem::path file_path;
 filesystem::path exe_path;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     tmp = get_lower(tmp);
     size_t pos = tmp.find(".cpp");
     
-    if (pos != tmp.size() - 4) // check if the file name has a .cpp suffix
+    if (pos != tmp.size() - 4 || tmp.size() <= 4) // check if the file name has a .cpp suffix
     {
         tmp = tmp + ".cpp";
     }
@@ -159,11 +159,11 @@ int main(int argc, char *argv[])
 
         if (code2 == 0)
         {
-            cout << "----------------\nSuccessfully finished in " << duration.count() << " seconds\n";
+            cout << "\n----------------\nSuccessfully finished in " << duration.count() << " seconds\n";
         }
         else
         {
-            cout << "----------------\nRuntime error, return value: " << code2 << '\n';
+            cout << "\n----------------\nRuntime error, return value: " << code2 << '\n';
             return -1;
         }
         if (!retain)
