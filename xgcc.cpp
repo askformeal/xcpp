@@ -38,7 +38,7 @@ int handle_op(int i);
 
 int main(int argc, char *argv[])
 {
-    system("chcp 65001 > nul")
+    system("chcp 65001 > nul");
     if (!check_gpp())
     {
         return -1;
