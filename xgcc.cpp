@@ -194,7 +194,7 @@ void print_help()
     cout << "    xgcc [file name] [argument 1, argument 2...]\n";
     cout << "    xgcc -h\n";
     cout << "    xgcc -help\n";
-    cout << "arguments starts with \"-\" will be taken as \"options\", while others will be passed into the executable file";
+    cout << "Arguments starts with \"-\" will be taken as \"options\", while others will be passed into the executable file";
     cout << "Available options:\n";
     cout << "    -R Do not delete executable file after executing\n";
     cout << "    -O1 Use O1 optimization\n";
